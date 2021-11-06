@@ -4,8 +4,16 @@
 import os, sys
 import argparse
 from bs4 import BeautifulSoup
+import requests
 
 def brklnk(url):
+    page = requests.get(url, allow_redirects=True)
+    if page.status_code == 200:
+        soup = BeautifulSoup(page.content, 'html.parser')
+        
+    # open("landing_page", "wt").write(page.content)
+    # with open(url) as fp:
+    #     soup = BeautifulSoup(fp, 'html.parser')
     # for root, _, filenames in os.walk(directoryPath):
     #     for filename in filenames:
     #         # print ("Root: {}. Filename: {}".format(root, filename))
