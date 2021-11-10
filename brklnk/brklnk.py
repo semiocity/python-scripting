@@ -3,14 +3,39 @@
 
 import os, sys
 import argparse
+from urllib.parse import urlparse, urljoin
 from bs4 import BeautifulSoup
 import requests
+import re
+
 
 def brklnk(url):
+    print(url)
+    print(urlparse(url))
+    # regexing4links = re.compile(r'href=\".*\"')
     page = requests.get(url, allow_redirects=True)
     if page.status_code == 200:
         soup = BeautifulSoup(page.content, 'html.parser')
-        
+    print (soup)
+
+    links = []
+    for link in soup.findAll("a", href=True):
+        print("Href: {}".format(link['href']))
+        absolute_path = urljoin(url, link['href'])
+        links.append(absolute_path)
+
+    broken_links = []
+    for link2Btested in links:
+        print ("Testing: {}".format(link2Btested))
+        page = requests.get(link2Btested, allow_redirects=False)
+        if page.status_code != 200:
+            broken_links.append (link2Btested)
+
+    print("Broken links: {}".format(broken_links))
+    # links = re.findall(r'href=\".*\"', str(soup))
+    # for ilink, link in enumerate(links):
+    #     links[ilink] = url+link[6:-1]
+    # print (links)
     # open("landing_page", "wt").write(page.content)
     # with open(url) as fp:
     #     soup = BeautifulSoup(fp, 'html.parser')
