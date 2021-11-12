@@ -9,11 +9,6 @@ def strextract(directoryPath):
     precompiled_regex = re.compile(r'\"[^\"]*\"')
     for root, _, filenames in os.walk(directoryPath):
         for filename in filenames:
-            # print ("Root: {}. Filename: {}".format(root, filename))
-
-            # if filename.endswith('.pyc'):
-            #     os.remove(os.path.join(root, filename))
-            # print ("Début chemin", os.path.join(root, filename), "Fin chemin")
             if filename[0]==".":
                 continue
             with open(os.path.join(root, filename)) as file:
