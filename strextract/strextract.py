@@ -5,11 +5,17 @@ import os, sys
 import argparse
 import re
 
-def strextract(directoryPath):
+def file_suffix(filename):
+    if "." in filename:
+        return filename [filename.index("."):]
+    else:
+        return ""
+
+def strextract(directoryPath, suffix):
     precompiled_regex = re.compile(r'\"[^\"]*\"')
     for root, _, filenames in os.walk(directoryPath):
         for filename in filenames:
-            if filename[0]==".":
+            if filename[0] == "." or file_suffix(filename) != suffix :
                 continue
             with open(os.path.join(root, filename)) as file:
                 try:
@@ -25,9 +31,10 @@ def main():
     # build an empty parser
     parser = argparse.ArgumentParser()
     parser.add_argument("dir", type=str, help="Directory from which the string extraction has to be performed recursively in all files and subdirectories")
-    # parser.add_argument("-p", "--prefix", type=str, default="-- ", help="prefix to add at the beginning of every line")
+    parser.add_argument("--suffix", "-s", type=str, default = "", help="Suffix of the files to be inspected")
+
     args = parser.parse_args()
-    strextract(args.dir)
+    strextract(args.dir, args.suffix)
 
 if __name__ == '__main__':
     main ()
