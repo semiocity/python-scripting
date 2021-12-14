@@ -31,7 +31,6 @@ def brklnk(url, depth, verbose, visited_urls, broken_links):
             print("\nThis link is broken!\n")
         else:
             print("Broken link: {}".format(url))
-        broken_links.add(url)
 
 def main():
     # build an empty parser
@@ -42,10 +41,6 @@ def main():
     args = parser.parse_args()
     broken_links = set()
     brklnk(args.url, int(args.depth), args.verbose, set(), broken_links)
-    if args.verbose:
-        print("\n\nList of broken links:")
-        for link in broken_links:
-            print (link)
 
 
 if __name__ == '__main__':
