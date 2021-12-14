@@ -15,15 +15,19 @@ def strextract(directoryPath, suffix, allfiles, path_required):
     precompiled_regex = re.compile(r'\"[^\"]*\"')
     for root, _, filenames in os.walk(directoryPath):
         for filename in filenames:
-            if (filename.startswith(".") and not(allfiles)) or ((suffix != "") and (file_suffix(filename) != suffix)) :
+
+            if filename.startswith(".") and not(allfiles):
+                continue            
+            if suffix and not filename.endswith(suffix) :
                 continue
+
             with open(os.path.join(root, filename)) as file:
                 try:
                     for ligne in file:
                         # print(ligne)
                         matching_list = precompiled_regex.findall(ligne)
                         for phrase in matching_list:
-                            print("{}\t{}".format(os.path.join(root, filename),phrase))
+                            print("{}{}".format("{}\t".format(os.path.join(root, filename)) if path_required else "" ,phrase))
                 except:
                     continue
 
