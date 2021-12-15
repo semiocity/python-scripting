@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+# This script recursively follows and inspects all the hyperlinks in a given
+# html page and displays the broken links on the standard output.
+# See the documentation for options.
+
 import os, sys
 import argparse
 from urllib.parse import urlparse, urljoin

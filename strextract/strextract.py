@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+# This Python script recursively walks through all the files and directories
+# of a given directory, extracts the strings from the files and outputs
+# the strings on the standard output. See documentation for options.
+
+
 import os, sys
 import argparse
 import re
